@@ -9,7 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+  <script type="importmap">{"imports":{"three":"./vendor/three.module.min.js"}}</script>
+  <link rel="stylesheet" href="walkthrough.css">
   <style>
     :root { color-scheme: dark; --ink:#e8dfd0; --muted:#a89b89; --paper:#cbbda7; --red:#a94334; --line:rgba(232,223,208,.18); --night:#201b17; --panel:#2a241e; }
     * { box-sizing:border-box }
@@ -76,22 +77,50 @@
         <p class="eyebrow">A place we used to play</p>
         <h1>排练室记忆<span>旧址 · 三维影像档案</span></h1>
       </div>
-      <p class="intro">房间搬走了，声音却还留在这里。我们用 iPhone 扫描、旧照片和回忆，重新拼起这间曾经熟悉的排练室。<em>拖动模型，重新走进 Room 107。</em></p>
+      <p class="intro">房间搬走了，声音却还留在这里。我们用 iPhone 扫描、旧照片和回忆，重新拼起这间曾经熟悉的排练室。<em>还记得门锁的密码吗？推开门，再走进 Room 107。</em></p>
     </section>
 
     <section aria-label="互动三维模型">
-      <div class="viewer-shell">
-        <model-viewer id="room" src="rehearsal-room.glb" poster="room-panorama.png" alt="排练室三维重建模型，可拖动旋转和缩放" camera-controls touch-action="pan-y" shadow-intensity="0.75" exposure="0.9" environment-image="neutral" interaction-prompt="none" camera-orbit="140deg 72deg auto" min-camera-orbit="auto 15deg auto" max-camera-orbit="auto 110deg auto" loading="eager" reveal="auto">
-          <button slot="ar-button" style="display:none">AR</button>
-        </model-viewer>
-        <div class="loading">正在载入空间档案 · PLEASE WAIT</div>
-        <div class="viewer-controls">
-          <button id="home" type="button" aria-label="重置模型视角">⌂ 归位</button>
-          <button id="spin" type="button" aria-pressed="false">↻ 自动环视</button>
-          <button id="fullscreen" type="button">⛶ 全屏</button>
+      <div class="viewer-shell" id="walkthrough" data-state="locked">
+        <div id="room" aria-label="排练室漫游区域"></div>
+        <div id="entry-gate" class="entry-gate">
+          <div class="door-memory"><span>107</span><p>熟悉的门，<br>还在等你回来。</p></div>
+          <form id="lock-form" class="lock-panel">
+            <span class="lock-eyebrow">ROOM 107 / 门口</span>
+            <h2>还记得密码吗？</h2>
+            <label for="door-code">输入六位门锁密码</label>
+            <input id="door-code" type="password" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="off" required aria-describedby="lock-feedback" placeholder="······">
+            <div class="keypad" aria-label="门锁数字键盘">
+              <button type="button" data-digit="1">1</button><button type="button" data-digit="2">2</button><button type="button" data-digit="3">3</button>
+              <button type="button" data-digit="4">4</button><button type="button" data-digit="5">5</button><button type="button" data-digit="6">6</button>
+              <button type="button" data-digit="7">7</button><button type="button" data-digit="8">8</button><button type="button" data-digit="9">9</button>
+              <button type="button" id="clear-code">清空</button><button type="button" data-digit="0">0</button><button type="button" id="delete-code" aria-label="删除最后一位">⌫</button>
+            </div>
+            <p id="lock-feedback" role="status" aria-live="polite">只有熟悉这里的人，才知道这串数字。</p>
+            <button id="unlock" type="submit" disabled>正在准备空间…</button>
+            <p id="load-status" role="status" aria-live="polite">正在载入排练室…</p>
+            <button type="button" id="retry-load" hidden>重新加载</button>
+          </form>
         </div>
+        <div class="walk-hud" hidden>
+          <div class="walk-label"><span class="live-dot"></span> ROOM 107 <span>／ 室内漫游</span></div>
+          <div class="viewer-controls">
+            <button id="home" type="button">⌂ 回到起点</button>
+            <button id="relock" type="button">门口</button>
+            <button id="fullscreen" type="button">⛶ 全屏</button>
+          </div>
+          <div class="crosshair" aria-hidden="true">+</div>
+          <p class="walk-help" id="walk-help">按住画面拖动环顾 · WASD / 方向键行走 · Shift 慢走</p>
+          <div id="joystick" class="joystick" role="group" aria-label="移动摇杆：拖动圆盘行走，也可用方向按钮">
+            <div id="joystick-knob" aria-hidden="true"></div>
+            <button type="button" data-move="forward" aria-label="向前走">↑</button><button type="button" data-move="left" aria-label="向左走">←</button><button type="button" data-move="right" aria-label="向右走">→</button><button type="button" data-move="back" aria-label="向后走">↓</button>
+          </div>
+          <span class="touch-help">左手行走 · 右手拖动环顾</span>
+          <p id="walk-status" class="walk-status" role="status" aria-live="polite"></p>
+        </div>
+        <noscript><p class="no-script">请开启 JavaScript 后使用门锁与室内漫游。</p></noscript>
       </div>
-      <div class="model-caption"><span>GLB · INTERACTIVE MODEL</span><span>鼠标拖动旋转 · 滚轮缩放 · 双指操作</span></div>
+      <div class="model-caption"><span>ROOM 107 · WALK INSIDE</span><span>解锁进入 · 电脑键盘行走 · 手机摇杆漫游</span></div>
       <div class="facts" aria-label="重建模型概要">
         <div class="fact"><b>43</b><span>Chairs · 椅凳</span></div>
         <div class="fact"><b>24</b><span>Music stands · 谱架</span></div>
@@ -112,19 +141,11 @@
 
     <section class="note">
       <p class="quote">“空间会变，<br>一起演奏过的日子不会。”</p>
-      <p class="text">这是一份由照片与低精度扫描共同重建的空间档案。由于没有原始测绘尺寸，房间比例为参考物估算；模型用于回忆与浏览，不作为工程测量。欢迎转动视角，找找那些曾经熟悉的角落。</p>
+      <p class="text">这是一份由照片与低精度扫描共同重建的空间档案。由于没有原始测绘尺寸，房间比例为参考物估算；模型用于回忆与浏览，不作为工程测量。走过椅子与谱架，找找那些曾经熟悉的角落。</p>
     </section>
     <footer><span>ROOM 107 · DIGITAL MEMORY ARCHIVE</span><a href="rehearsal-room.glb" download>保存 GLB 文件 ↓</a></footer>
   </main>
-  <script>
-    const viewer = document.querySelector('#room');
-    const shell = document.querySelector('.viewer-shell');
-    viewer.addEventListener('load', () => shell.classList.add('is-loaded'));
-    viewer.addEventListener('progress', (event) => { if (event.detail.totalProgress >= 1) shell.classList.add('is-loaded'); });
-    viewer.addEventListener('error', () => { document.querySelector('.loading').textContent = '模型未能载入 · 请稍后刷新'; });
-    document.querySelector('#home').addEventListener('click', () => { viewer.cameraOrbit = '140deg 72deg auto'; viewer.cameraTarget = 'auto auto auto'; viewer.fieldOfView = 'auto'; });
-    document.querySelector('#spin').addEventListener('click', (event) => { viewer.toggleAttribute('auto-rotate'); const active = viewer.hasAttribute('auto-rotate'); event.currentTarget.setAttribute('aria-pressed', String(active)); event.currentTarget.textContent = active ? 'Ⅱ 暂停环视' : '↻ 自动环视'; });
-    document.querySelector('#fullscreen').addEventListener('click', async () => { if (!document.fullscreenElement) await document.querySelector('.viewer-shell').requestFullscreen?.(); else await document.exitFullscreen?.(); });
-  </script>
+  <script type="module" src="walkthrough.js"></script>
+  <script>window.setTimeout(() => { if (!document.querySelector('#walkthrough').dataset.engine) { document.querySelector('#load-status').textContent = '查看器启动失败，请刷新重试。'; document.querySelector('#retry-load').hidden = false; document.querySelector('#retry-load').onclick = () => location.reload(); } }, 20000);</script>
 </body>
 </html>

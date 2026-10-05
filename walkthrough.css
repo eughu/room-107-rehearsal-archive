@@ -1,0 +1,62 @@
+[hidden] { display:none!important }
+#walkthrough { padding:0; overflow:hidden; isolation:isolate; height:720px; max-height:90svh; min-height:580px }
+#walkthrough::before,#walkthrough::after { content:none }
+#room { position:absolute; inset:0; background:#28241e }
+#room canvas { display:block; width:100%; height:100%; touch-action:none; outline:none; cursor:grab }
+#room canvas:active { cursor:grabbing }
+#room canvas:focus-visible { outline:2px solid #e1ae70; outline-offset:-3px }
+.entry-gate { position:absolute; inset:0; z-index:4; display:grid; grid-template-columns:1fr 340px; gap:30px; align-items:center; padding:44px; background:linear-gradient(90deg,#16110c38,#16110c90 50%,#16110cf5),url('entrance-detail.png') center 40%/cover }
+.door-memory { align-self:end; text-shadow:0 2px 16px #000 }
+.door-memory>span { font:clamp(50px,8vw,110px) 'Noto Serif SC',serif; letter-spacing:.12em }
+.door-memory p { font-size:22px; line-height:1.8 }
+.lock-panel { padding:25px; border:1px solid #dfb97b44; background:#1a1814ed; box-shadow:0 15px 55px #0008; border-radius:5px }
+.lock-eyebrow { color:#ad9b7e; font:10px 'DM Mono',monospace; letter-spacing:.16em }
+.lock-panel h2 { font-size:24px; font-weight:400; margin:15px 0 20px }
+.lock-panel label { display:block; color:#bcae98; font-size:12px; margin:0 0 10px }
+#door-code { width:100%; height:53px; border:1px solid #b99a6855; border-radius:3px; background:#101411; color:#efc88d; padding:0 14px; text-align:center; font:24px 'DM Mono',monospace; letter-spacing:.38em; caret-color:#eac087 }
+#door-code:focus { outline:2px solid #c39c60; outline-offset:2px }
+#door-code[aria-invalid="true"] { border-color:#e38770 }
+.keypad { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:16px 0 12px }
+.keypad button { min-height:45px; font-size:17px; border-radius:3px; background:#292723 }
+.keypad #clear-code { font-size:12px }
+#lock-feedback { font-size:11px; line-height:1.7; min-height:36px; color:#b5a995; margin:8px 0 }
+#lock-feedback.error { color:#ffb59f }
+#unlock { width:100%; background:#a94334; border-color:#c57053; font-size:14px; padding:13px }
+button:disabled { opacity:.45; cursor:wait; transform:none }
+#load-status { font:10px/1.6 'DM Mono',monospace; color:#9e9688; text-align:center; margin:12px 0 0 }
+#retry-load { width:100%; margin-top:10px }
+.walk-hud { position:absolute; inset:0; pointer-events:none; z-index:2 }
+.walk-hud button,.joystick { pointer-events:auto }
+.walk-label { position:absolute; top:23px; left:24px; font:11px 'DM Mono',monospace; background:#181510a8; padding:9px 12px; border-radius:3px }
+.walk-label>span:last-child { color:#d5c4ab }
+.live-dot { display:inline-block; width:5px; height:5px; border-radius:100%; background:#e7bc72; margin-right:6px }
+.crosshair { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:#fff9; font:20px monospace; text-shadow:0 0 3px #000 }
+.walk-help { position:absolute; bottom:18px; left:50%; transform:translateX(-50%); white-space:nowrap; max-width:90%; background:#181510ce; color:#e0d0b7; padding:10px 14px; border-radius:3px; font-size:11px }
+.walk-status { position:absolute; left:50%; top:72px; transform:translateX(-50%); text-align:center; background:#181510c9; font-size:12px; padding:9px 14px; border-radius:4px }
+.walk-status:empty { display:none }
+.joystick { position:absolute; bottom:30px; left:26px; width:120px; height:120px; border:1px solid #ead6b28c; border-radius:50%; background:#18151069; touch-action:none }
+#joystick-knob { position:absolute; left:40px; top:40px; width:40px; height:40px; border:1px solid #dec7a6; border-radius:50%; background:#d0b08588; pointer-events:none }
+.joystick button { position:absolute; border:0; background:transparent; padding:5px; width:30px; height:30px; font-size:20px; backdrop-filter:none; touch-action:none }
+.joystick button[data-move="forward"] { top:2px; left:44px }
+.joystick button[data-move="back"] { bottom:2px; left:44px }
+.joystick button[data-move="left"] { top:44px; left:2px }
+.joystick button[data-move="right"] { top:44px; right:2px }
+.touch-help { display:none; position:absolute; bottom:25px; right:20px; font-size:11px; padding:8px; background:#181510ba }
+#walkthrough:fullscreen,#walkthrough.expanded { width:100%; height:100%; max-height:none; min-height:0; border:0; background:#201b17 }
+#walkthrough.expanded { position:fixed; inset:0; z-index:100 }
+.no-script { position:absolute; z-index:8; bottom:0; background:#201b17; width:100%; text-align:center; padding:16px }
+@media(max-width:760px) {
+  #walkthrough { height:80svh; max-height:760px; min-height:580px }
+  .entry-gate { grid-template-columns:1fr; gap:0; padding:22px; background-position:30% center }
+  .door-memory { display:none }
+  .lock-panel { width:100%; max-width:340px; margin:auto; padding:22px }
+  .walk-label { top:16px; left:14px }
+  #walkthrough .viewer-controls { top:65px; bottom:auto; right:14px; left:14px; gap:7px }
+  #walkthrough .viewer-controls button { min-height:42px; padding:9px 11px }
+  .walk-status { top:113px; width:max-content; max-width:90% }
+  .walk-help { bottom:169px; white-space:normal; width:calc(100% - 40px); text-align:center; line-height:1.7 }
+  .touch-help { display:block }
+  .joystick { bottom:35px; left:20px }
+  .model-caption { font-size:9px; line-height:1.7 }
+}
+@media(pointer:coarse) { .touch-help { display:block } }
