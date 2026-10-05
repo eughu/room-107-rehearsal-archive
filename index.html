@@ -146,6 +146,6 @@
     <footer><span>ROOM 107 · DIGITAL MEMORY ARCHIVE</span><a href="rehearsal-room.glb" download>保存 GLB 文件 ↓</a></footer>
   </main>
   <script type="module" src="walkthrough.js"></script>
-  <script>window.setTimeout(() => { if (!document.querySelector('#walkthrough').dataset.engine) { document.querySelector('#load-status').textContent = '查看器启动失败，请刷新重试。'; document.querySelector('#retry-load').hidden = false; document.querySelector('#retry-load').onclick = () => location.reload(); } }, 20000);</script>
+  <script>window.setTimeout(() => { if (!document.querySelector('#walkthrough').dataset.engine) { document.querySelector('#load-status').textContent = '首次载入较慢，正在准备查看器…可稍候或重试。'; document.querySelector('#retry-load').hidden = false; document.querySelector('#retry-load').onclick = () => location.reload(); } }, 20000);</script>
 </body>
 </html>

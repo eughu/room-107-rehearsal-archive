@@ -8,6 +8,8 @@ const shell=$('#walkthrough'), host=$('#room'), gate=$('#entry-gate'), hud=$('.w
 const input=$('#door-code'), feedback=$('#lock-feedback'), unlock=$('#unlock');
 const status=$('#load-status'), joystick=$('#joystick'), knob=$('#joystick-knob');
 shell.dataset.engine='three';
+$('#retry-load').hidden=true;
+status.textContent='正在载入排练室…';
 let renderer, scene, camera, ready=false, unlocked=false, yaw=START.yaw, pitch=0;
 let model, environmentTarget, obstacles=[], start={...START}, keys=new Set(), stick={x:0,y:0};
 let dragging=null, stickPointer=null, lastTime=0, lastTelemetry=0, messageTimer;
