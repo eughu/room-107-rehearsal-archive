@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#201b17">
+  <meta name="description" content="一间乐团排练室的三维影像档案。以扫描模型和现场照片重建，留存熟悉的空间与声音记忆。">
+  <title>排练室记忆档案 · Room 107</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+  <style>
+    :root { color-scheme: dark; --ink:#e8dfd0; --muted:#a89b89; --paper:#cbbda7; --red:#a94334; --line:rgba(232,223,208,.18); --night:#201b17; --panel:#2a241e; }
+    * { box-sizing:border-box }
+    html { scroll-behavior:smooth }
+    body { margin:0; background:var(--night); color:var(--ink); font-family:'Noto Serif SC',serif; }
+    body::before { content:""; position:fixed; inset:0; pointer-events:none; z-index:5; opacity:.12; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E"); }
+    a { color:inherit }
+    .topline { display:flex; align-items:center; justify-content:space-between; padding:18px clamp(20px,5vw,76px); border-bottom:1px solid var(--line); color:var(--muted); font:11px 'DM Mono',monospace; letter-spacing:.12em; text-transform:uppercase }
+    .mark { display:flex; align-items:center; gap:12px }
+    .mark i { width:9px; height:9px; display:inline-block; background:var(--red); border-radius:50%; box-shadow:0 0 16px #a9433470 }
+    .topline a { text-decoration:none; border-bottom:1px solid transparent; transition:border .2s,color .2s }
+    .topline a:hover { color:var(--ink); border-color:var(--red) }
+    main { max-width:1500px; margin:auto; padding:0 clamp(20px,5vw,76px) 80px }
+    .hero { display:grid; grid-template-columns:minmax(260px,.72fr) minmax(0,1.6fr); gap:clamp(28px,5vw,78px); padding:clamp(42px,7vw,92px) 0 46px; align-items:end }
+    .eyebrow { margin:0 0 22px; color:#c57866; font:11px 'DM Mono',monospace; letter-spacing:.2em; text-transform:uppercase }
+    h1 { margin:0; max-width:510px; font-size:clamp(38px,4.8vw,68px); font-weight:500; letter-spacing:.025em; line-height:1.12 }
+    h1 span { display:block; margin-top:13px; color:var(--paper); font-size:.43em; font-weight:400; letter-spacing:.19em }
+    .intro { max-width:610px; margin:0; color:#c0b5a4; font-size:clamp(14px,1.35vw,17px); line-height:2.05 }
+    .intro em { color:var(--ink); font-style:normal }
+    .viewer-shell { position:relative; padding:10px; border:1px solid rgba(203,189,167,.32); background:linear-gradient(135deg,#46372a,#211c18 34%,#30271f); box-shadow:0 30px 90px #0007; }
+    .viewer-shell::before,.viewer-shell::after { position:absolute; z-index:2; pointer-events:none; color:#d7c8b1; font:10px 'DM Mono',monospace; letter-spacing:.14em }
+    .viewer-shell::before { content:'ARCHIVE VIEW · 01'; left:24px; top:22px }
+    .viewer-shell::after { content:'DRAG TO ROTATE'; right:24px; bottom:20px; opacity:.7 }
+    model-viewer { display:block; width:100%; height:min(67vw,690px); min-height:390px; background:radial-gradient(ellipse at 53% 48%,#51473c 0,#332b23 48%,#211c18 100%); --poster-color:transparent; --progress-bar-color:#ba6651; --progress-mask:#211c18; }
+    model-viewer::part(default-progress-bar) { height:2px }
+    .loading { position:absolute; inset:0; display:grid; place-items:center; color:#c8b9a3; font:11px 'DM Mono',monospace; letter-spacing:.2em; pointer-events:none; transition:opacity .4s }
+    .viewer-shell.is-loaded .loading { opacity:0 }
+    .viewer-controls { display:flex; gap:9px; position:absolute; right:22px; top:17px; z-index:3 }
+    button { border:1px solid #cbbda748; background:#211c18d9; color:var(--ink); font:11px 'DM Mono',monospace; letter-spacing:.05em; padding:9px 12px; cursor:pointer; backdrop-filter:blur(8px); transition:background .2s,border-color .2s,transform .2s }
+    button:hover { background:#a94334; border-color:#cf7966; transform:translateY(-1px) }
+    .model-caption { display:flex; justify-content:space-between; gap:18px; padding:13px 4px 3px; color:var(--muted); font:10px 'DM Mono',monospace; letter-spacing:.08em }
+    .facts { display:grid; grid-template-columns:repeat(3,1fr); margin:32px 0 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line) }
+    .fact { padding:20px 24px 21px 0; border-right:1px solid var(--line) }
+    .fact + .fact { padding-left:24px }
+    .fact:last-child { border-right:0 }
+    .fact b { display:block; color:#e4d2b9; font-size:25px; font-weight:500 }
+    .fact span { display:block; margin-top:6px; color:var(--muted); font:10px 'DM Mono',monospace; letter-spacing:.12em; text-transform:uppercase }
+    .memories { padding-top:clamp(58px,8vw,102px) }
+    .section-head { display:flex; justify-content:space-between; align-items:end; gap:24px; margin-bottom:24px }
+    .section-head h2 { margin:0; font-size:clamp(24px,3.5vw,42px); font-weight:500; letter-spacing:.04em }
+    .section-head p { max-width:400px; margin:0; color:var(--muted); font-size:13px; line-height:1.8 }
+    .gallery { display:grid; grid-template-columns:1.2fr .8fr; gap:14px }
+    figure { position:relative; overflow:hidden; margin:0; background:var(--panel); border:1px solid var(--line) }
+    figure img { display:block; width:100%; height:100%; min-height:260px; object-fit:cover; filter:saturate(.78); transition:filter .5s,transform .8s cubic-bezier(.2,.7,.2,1) }
+    figure:hover img { filter:saturate(1); transform:scale(1.025) }
+    figcaption { position:absolute; inset:auto 0 0; padding:42px 18px 15px; color:#f1e6d6; font:10px 'DM Mono',monospace; letter-spacing:.12em; background:linear-gradient(transparent,#16120fe8) }
+    .note { display:grid; grid-template-columns:1fr 1fr; gap:40px; padding:clamp(46px,7vw,82px) 0 48px; align-items:center }
+    .note .quote { margin:0; color:#ddc8ac; font-size:clamp(22px,3vw,37px); line-height:1.7; letter-spacing:.05em }
+    .note .text { margin:0; color:#b3a694; font-size:13px; line-height:2.15 }
+    footer { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:22px 0 0; border-top:1px solid var(--line); color:#938675; font:10px 'DM Mono',monospace; letter-spacing:.08em }
+    footer a { color:#d1b99b; text-decoration:none }
+    @media(max-width:760px) { .hero { grid-template-columns:1fr; gap:24px; padding-top:46px } .intro { max-width:unset } model-viewer { height:70vh; min-height:360px } .viewer-controls { top:auto; bottom:43px; right:16px } .viewer-shell::before { top:16px; left:16px } .viewer-shell::after { bottom:17px; right:15px } .gallery { grid-template-columns:1fr } figure img { min-height:220px; max-height:68vw } .section-head,.note { grid-template-columns:1fr; display:grid; gap:14px } .facts { grid-template-columns:repeat(3,1fr) } .fact { padding-right:10px } .fact + .fact { padding-left:12px } .fact b { font-size:20px } footer { align-items:flex-start; flex-direction:column } }
+    @media(prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition:none!important } }
+  </style>
+</head>
+<body>
+  <header class="topline">
+    <div class="mark"><i></i><span>Room 107 · Rehearsal Archive</span></div>
+    <a href="rehearsal-room.glb" download>下载 3D 模型 ↗</a>
+  </header>
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">A place we used to play</p>
+        <h1>排练室记忆<span>旧址 · 三维影像档案</span></h1>
+      </div>
+      <p class="intro">房间搬走了，声音却还留在这里。我们用 iPhone 扫描、旧照片和回忆，重新拼起这间曾经熟悉的排练室。<em>拖动模型，重新走进 Room 107。</em></p>
+    </section>
+
+    <section aria-label="互动三维模型">
+      <div class="viewer-shell">
+        <model-viewer id="room" src="rehearsal-room.glb" poster="room-panorama.png" alt="排练室三维重建模型，可拖动旋转和缩放" camera-controls touch-action="pan-y" shadow-intensity="0.75" exposure="0.9" environment-image="neutral" interaction-prompt="none" camera-orbit="140deg 72deg auto" min-camera-orbit="auto 15deg auto" max-camera-orbit="auto 110deg auto" loading="eager" reveal="auto">
+          <button slot="ar-button" style="display:none">AR</button>
+        </model-viewer>
+        <div class="loading">正在载入空间档案 · PLEASE WAIT</div>
+        <div class="viewer-controls">
+          <button id="home" type="button" aria-label="重置模型视角">⌂ 归位</button>
+          <button id="spin" type="button" aria-pressed="false">↻ 自动环视</button>
+          <button id="fullscreen" type="button">⛶ 全屏</button>
+        </div>
+      </div>
+      <div class="model-caption"><span>GLB · INTERACTIVE MODEL</span><span>鼠标拖动旋转 · 滚轮缩放 · 双指操作</span></div>
+      <div class="facts" aria-label="重建模型概要">
+        <div class="fact"><b>43</b><span>Chairs · 椅凳</span></div>
+        <div class="fact"><b>24</b><span>Music stands · 谱架</span></div>
+        <div class="fact"><b>01</b><span>Room · 排练室</span></div>
+      </div>
+    </section>
+
+    <section class="memories">
+      <div class="section-head">
+        <h2>留在墙上的声音</h2>
+        <p>黑板上的粉笔字、门边的音符对联，还有那些搬不走的细节。</p>
+      </div>
+      <div class="gallery">
+        <figure><img src="memory-wall.png" alt="排练室黑板和怀旧陈列细节" loading="lazy"><figcaption>01 / CHALK, NOTES & OLD MEMORIES</figcaption></figure>
+        <figure><img src="entrance-detail.png" alt="排练室大门、密码锁与音符对联" loading="lazy"><figcaption>02 / THE DOOR WE REMEMBER</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="note">
+      <p class="quote">“空间会变，<br>一起演奏过的日子不会。”</p>
+      <p class="text">这是一份由照片与低精度扫描共同重建的空间档案。由于没有原始测绘尺寸，房间比例为参考物估算；模型用于回忆与浏览，不作为工程测量。欢迎转动视角，找找那些曾经熟悉的角落。</p>
+    </section>
+    <footer><span>ROOM 107 · DIGITAL MEMORY ARCHIVE</span><a href="rehearsal-room.glb" download>保存 GLB 文件 ↓</a></footer>
+  </main>
+  <script>
+    const viewer = document.querySelector('#room');
+    const shell = document.querySelector('.viewer-shell');
+    viewer.addEventListener('load', () => shell.classList.add('is-loaded'));
+    viewer.addEventListener('progress', (event) => { if (event.detail.totalProgress >= 1) shell.classList.add('is-loaded'); });
+    viewer.addEventListener('error', () => { document.querySelector('.loading').textContent = '模型未能载入 · 请稍后刷新'; });
+    document.querySelector('#home').addEventListener('click', () => { viewer.cameraOrbit = '140deg 72deg auto'; viewer.cameraTarget = 'auto auto auto'; viewer.fieldOfView = 'auto'; });
+    document.querySelector('#spin').addEventListener('click', (event) => { viewer.toggleAttribute('auto-rotate'); const active = viewer.hasAttribute('auto-rotate'); event.currentTarget.setAttribute('aria-pressed', String(active)); event.currentTarget.textContent = active ? 'Ⅱ 暂停环视' : '↻ 自动环视'; });
+    document.querySelector('#fullscreen').addEventListener('click', async () => { if (!document.fullscreenElement) await document.querySelector('.viewer-shell').requestFullscreen?.(); else await document.exitFullscreen?.(); });
+  </script>
+</body>
+</html>
